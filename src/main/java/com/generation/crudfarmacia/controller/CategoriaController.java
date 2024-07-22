@@ -21,19 +21,19 @@ public class CategoriaController {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> getAll(){
+    public ResponseEntity<List<Categoria>> getAll() {
         return ResponseEntity.ok(categoriaRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getById(@PathVariable Long id){
+    public ResponseEntity<Categoria> getById(@PathVariable Long id) {
         return categoriaRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<List<Categoria>>getByNome(@PathVariable String nome){
+    public ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome) {
         return ResponseEntity.ok(categoriaRepository.findAllByNomeContainingIgnoreCase(nome));
     }
 
@@ -46,7 +46,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> post(@Valid @RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> post(@Valid @RequestBody Categoria categoria) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(categoriaRepository.save(categoria));
     }
@@ -56,7 +56,7 @@ public class CategoriaController {
     public void delete(@PathVariable Long id) {
         Optional<Categoria> categoria = categoriaRepository.findById(id);
 
-        if(categoria.isEmpty())
+        if (categoria.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         categoriaRepository.deleteById(id);
